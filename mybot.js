@@ -1,23 +1,11 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
-var config = "\data\dvaconfig.json"
+var config = require("../data/dvaconfig.json")
 var nicks = require('./nicks.json');
 var fs = require("fs");
 
 
-client.on("message", (message) => {  
-    if(message.channel.name == "change-nickname"){
-        var namechange = message.content
-        nicks[message.member.id] = namechange;
-
-        message.member.setNickname(namechange).then(()=>{            
-            fs.writeFile("./nicks.json", JSON.stringify(nicks),"utf-8", function(){});   
-            message.delete(namechange)
-            message.member.removeRole(message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change")))  
-        })           
-    }
-});
 
 client.on("message", (message) => {  
     if(message.channel.name == "change-nickname"){
@@ -47,6 +35,19 @@ client.on("guildMemberAdd", (member) => {
 
 client.on('message', message => {
     var prefix = ">";
+
+     if(message.channel.name == "change-nickname"){
+        var namechange = message.content
+        nicks[message.member.id] = namechange;
+
+        message.member.setNickname(namechange).then(()=>{
+            fs.writeFile("./nicks.json", JSON.stringify(nicks),"utf-8", function(){});
+            message.delete(namechange)
+            message.member.removeRole(message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change")))
+    }
+
+
+
 
     if(message.content.startsWith(prefix)){
         var command = {};
