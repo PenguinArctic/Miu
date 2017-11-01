@@ -1,16 +1,10 @@
 const Discord = require("discord.js");
 const client = new Discord.Client();
 
+var config = "\data\dvaconfig.json"
 var nicks = require('./nicks.json');
 var fs = require("fs");
 
-client.on("ready", () => {
-    client.guilds.find("name","Fandom Circle").members.forEach(function(member){
-        member.addRole(member.guild.roles.find("id" , "373825585832656896")).then(newMember=>{
-            console.log(newMember.nickname);
-        })
-    })
-})
 
 client.on("message", (message) => {  
     if(message.channel.name == "change-nickname"){
@@ -84,4 +78,4 @@ client.on('message', message => {
 
 
 
-client.login("Mzc0NTE1MTQyOTg3MzUwMDE3.DNiqIA.fewmr4c_M68EyhL06Y8icuMy6Kg");
+client.login(config.token)
