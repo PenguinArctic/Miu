@@ -28,7 +28,7 @@ client.on('message', message => {
         param[0] = param[0].split(prefix)[1];
 
         const commandName = param[0]
-        if(util.checkPerm(message,commandName)){
+        if(util.permCheck(message,commandName)){
             switch(commandName){
                 case "panic":
                     message.channel.overwritePermissions(message.guild.roles.get(message.guild.id),{SEND_MESSAGES: false} )
