@@ -11,7 +11,7 @@ client.on("guildMemberAdd", (member) => {
     if(nicks [member.id]== undefined) { 
         member.setNickname(name);
         nicks [member.id] = name;
-        fs.writeFile("./nicks.json", JSON.stringify(nicks),"utf-8", function(){});
+        util.save(nicks,"nicks");
     }else{
         member.setNickname(nicks[member.id]) 
     }
@@ -46,7 +46,7 @@ client.on('message', message => {
                 nicks[message.member.id] = namechange;
 
                 message.member.setNickname(namechange).then(()=>{
-                    fs.writeFile("./nicks.json", JSON.stringify(nicks),"utf-8", function(){});
+                    util.save(nicks,"nicks");
                     message.delete(namechange)
                     message.member.removeRole(message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change")))
                 })
