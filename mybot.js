@@ -8,9 +8,9 @@ var util = require("../akirabot/utilities.js")
 
 client.on("guildMemberAdd", (member) => {
     var name = member.user.username;
-    if(nicks [member.id]== undefined) { 
-        member.setNickname(name);
-        nicks [member.id] = name;
+    if(nicks [member.id] == undefined) {
+        member.setNickname(util.stripEmoji(name) + " ☕");
+        nicks [member.id] = util.stripEmoji(name) + " ☕";
         util.save(nicks,"nicks");
     }else{
         member.setNickname(nicks[member.id]) 
