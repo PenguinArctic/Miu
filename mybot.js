@@ -13,7 +13,7 @@ client.on("guildMemberAdd", (member) => {
         nicks [member.id] = util.stripEmoji(name) + " ☕";
         util.save(nicks,"nicks");
     }else{
-        member.setNickname(nicks[member.id]) 
+        member.setNickname(nicks[member.id])
     }
 });
 
@@ -39,20 +39,20 @@ client.on('message', message => {
                     break;
             }
         }
+    }
 
-        switch(message.channel.name){
-            case "change-nickname":
-                var namechange = message.content + " " + message.member.nickname[message.member.nickname.length -1];
-                nicks[message.member.id] = namechange;
+    switch(message.channel.name){
+        case "change-nickname":
+            var namechange = message.content + " " + message.member.nickname[message.member.nickname.length -1];
+            nicks[message.member.id] = namechange;
 
-                message.member.setNickname(namechange).then(()=>{
-                    util.save(nicks,"nicks");
-                    message.delete(namechange)
-                    message.member.removeRole(message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change")))
-                })
-                break
-        }
-    }   
+            message.member.setNickname(namechange).then(()=>{
+                util.save(nicks,"nicks");
+                message.delete(namechange)
+                message.member.removeRole(message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change")))
+            })
+            break
+    }
 }) 
 
 
