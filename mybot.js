@@ -43,7 +43,10 @@ client.on('message', message => {
 
     switch(message.channel.name){
         case "change-nickname":
-            var namechange = message.content + " " + message.member.nickname[message.member.nickname.length -1];
+            var strippedName = message.member.nickname.split(" ");
+            strippedName.pop();
+
+            var namechange = message.content + " " + strippedName.join(" ");
             nicks[message.member.id] = namechange;
 
             message.member.setNickname(namechange).then(()=>{
