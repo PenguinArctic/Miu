@@ -37,6 +37,16 @@ client.on('message', message => {
                 case "panicoff":
                     message.channel.overwritePermissions(message.guild.roles.get(message.guild.id),{SEND_MESSAGES: null},"EVERYBODY STOP PANICKING" )
                     break;
+
+                case "warn":
+                    if(message.mentions.members.size==1 ) {
+             param.shift()
+             param.shift()
+            var reason = param.join(" ")
+                    message.mentions.members.first().send(reason)
+
+
+}
             }
         }
     }
