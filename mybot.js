@@ -13,7 +13,7 @@ client.on("guildMemberAdd", (member) => {
         nicks [member.id] = util.stripEmoji(name) + " ☕";
         util.save(nicks,"nicks");
     }else{
-        member.setNickname(nicks[member.id])
+        member.setNickname(nicks[member.id],"Locked nickname");
     }
 });
 
@@ -31,11 +31,11 @@ client.on('message', message => {
         if(util.permCheck(message,commandName)){
             switch(commandName){
                 case "panic":
-                    message.channel.overwritePermissions(message.guild.roles.get(message.guild.id),{SEND_MESSAGES: false} )
+                    message.channel.overwritePermissions(message.guild.roles.get(message.guild.id),{SEND_MESSAGES: false} ,"EVERYBODY PANIC")
                     break;
 
                 case "panicoff":
-                    message.channel.overwritePermissions(message.guild.roles.get(message.guild.id),{SEND_MESSAGES: null} )
+                    message.channel.overwritePermissions(message.guild.roles.get(message.guild.id),{SEND_MESSAGES: null},"EVERYBODY STOP PANICKING" )
                     break;
             }
         }
@@ -48,10 +48,10 @@ client.on('message', message => {
             var namechange = message.content + " " + emoji;
             nicks[message.member.id] = namechange;
 
-            message.member.setNickname(namechange).then(()=>{
+            message.member.setNickname(namechange,"Name Change sponsored by Monokuma").then(()=>{
                 util.save(nicks,"nicks");
-                message.delete(namechange)
-                message.member.removeRole(message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change")))
+                message.delete(namechange);
+                message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change"),"Nickname change")
             })
             break
     }
