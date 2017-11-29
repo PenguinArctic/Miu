@@ -55,7 +55,11 @@ client.on('message', message => {
 					message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change"),"Nickname change")
 				})
 			}
-			break
+			break;
+
+		case "miu":
+			util.talk(client,message);
+			break;
 	}
 }) 
 
