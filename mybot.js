@@ -4,7 +4,7 @@ const client = new Discord.Client();
 var config = require("../data/dvaconfig.json")
 var nicks = require('../data/nicks.json');
 var fs = require("fs");
-var util = require("../akirabot/utilities.js")
+var util = require("../akira/utilities.js")
 
 client.on("guildMemberAdd", (member) => {
 	var name = member.user.username;
