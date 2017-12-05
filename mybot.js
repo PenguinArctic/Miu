@@ -121,6 +121,14 @@ client.on('message', message => {
 	}
 }) 
 
+client.on('ready', () => {
+	util.log(client,'I am ready!');
+});
 
+client.on('debug',info=>{
+	if(!info.startsWith("[ws]")){
+		util.log(client,info);
+	}
+})
 
 client.login(config.token)
