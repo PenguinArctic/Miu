@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 
 var config = require("../data/dvaconfig.json")
+var config = require("../data/perms.json")
 var nicks = require('../data/nicks.json');
 var fs = require("fs");
 var util = require("../akira/utilities.js")
@@ -36,6 +37,57 @@ client.on('message', message => {
 
 				case "panicoff":
 					message.channel.overwritePermissions(message.guild.roles.get(message.guild.id),{SEND_MESSAGES: null},"EVERYBODY STOP PANICKING" )
+					break;
+
+				case "prune":
+					message.channel.bulkDelete(parseInt(param[1]) + 1);
+					break;
+
+				case "perms":
+					var name = param[1];
+					var type = param[2];
+					param = param.slice(3)
+					if(perms[name] != undefined){
+						switch(type){
+							case "add":
+								if(message.mentions.users.size > 0){
+									perms[name].user.push(message.mentions.users.first().id);
+								}else if(message.mentions.channels.size > 0){
+									perms[name].channel.push(message.mentions.channels.first().id);
+								}else{
+									perms[name].role.push(param.join(" "));
+								}
+								util.save(perms,"perms");
+								message.reply(param.join(" ") + " is now allowed to use " + name);
+								break;
+
+								/*case "remove":
+                                            result[0].perms = result[0].perms.filter(e => e !== param.join(" ") );
+                                            perms.save(result[0]);
+                                            message.reply("Removed " + param.join(" ") + " from the command " + name);
+                                            break;*/
+						}
+					}else{
+						switch(type){
+							case "add":
+								perms[name] = {"user":[], "role":[], "channel":[]};
+
+								if(message.mentions.users.size > 0){
+									perms[name].user.push(message.mentions.users.first().id);
+								}else if(message.mentions.channels.size > 0){
+									perms[name].channel.push(message.mentions.channels.first().id);
+								}else{
+									perms[name].role.push(param.join(" "));
+								}
+
+								util.save(perms,"perms");
+								message.reply(param.join(" ") + " is now allowed to use " + name);
+								break;
+
+							case "delete":
+								message.reply("This command has no permissions set");
+						}
+					}
 					break;
 			}
 		}
