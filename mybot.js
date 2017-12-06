@@ -1,8 +1,8 @@
 const Discord = require("discord.js");
-const client = new Discord.Client();
+var client = new Discord.Client();
 
 var config = require("../data/dvaconfig.json")
-var config = require("../data/perms.json")
+var perms = require("../data/perms.json")
 var nicks = require('../data/nicks.json');
 var fs = require("fs");
 var util = require("../akira/utilities.js")
@@ -17,6 +17,16 @@ client.on("guildMemberAdd", (member) => {
 		member.setNickname(nicks[member.id],"Locked nickname");
 	}
 });
+
+client.on('ready', () => {
+	util.log(client,'I am ready!');
+});
+
+client.on('debug',info=>{
+	if(typeof info === 'string' && !info.startsWith("[ws]")){
+		util.log(client,info);
+	}
+})
 
 client.on('message', message => {
 	try{
@@ -43,7 +53,39 @@ client.on('message', message => {
 						break;
 
 					case "mute":
+						if(message.mentions.members.size == 0){
+							message.channel.send("User to mute not mentioned");
+							return;
+						}
 
+						var time;
+						var reason = param.slice(3);
+						if(isNaN(parseInt(param[2]))){
+							time = 0
+							reason = param.slice(2);
+						}
+						message.mentions.members.first().addRole(message.guild.roles.find("name","Muted")).then(member=>{
+							if(time>0){
+								setTimeout(function(){
+									if(member.roles.exists("name","Muted")){
+										member.removeRole(message.guild.roles.find("name","Muted"));
+									}
+								},time*60000)
+							}
+						})
+
+						break;
+
+					case "unmute":
+						if(message.mentions.members.size == 0){
+							message.channel.send("User to unmute not mentioned");
+							return;
+						}
+						if(message.mentions.members.first().roles.exists("name","Muted")){
+							message.mentions.members.first().removeRole(message.guild.roles.find("name","Muted"));
+						}else{
+							message.channel.send(`${message.mentions.members.first().nickname || message.mentions.users.first().username} is not muted`)
+						}
 						break;
 
 					case "perms":
@@ -115,20 +157,10 @@ client.on('message', message => {
 			case "miu":
 				util.talk(client,message);
 				break;
-		}catch(e){
-			util.log(client,e);
 		}
+	}catch(e){
+		util.log(client,e);
 	}
 }) 
-
-client.on('ready', () => {
-	util.log(client,'I am ready!');
-});
-
-client.on('debug',info=>{
-	if(!info.startsWith("[ws]")){
-		util.log(client,info);
-	}
-})
 
 client.login(config.token)
