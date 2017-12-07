@@ -1,7 +1,6 @@
 const Discord = require("discord.js");
 var client = new Discord.Client();
 
-var config = require("../data/dvaconfig.json")
 var perms = require("../data/perms.json")
 var nicks = require('../data/nicks.json');
 var fs = require("fs");
@@ -163,4 +162,4 @@ client.on('message', message => {
 	}
 }) 
 
-client.login(config.token)
+client.login(require("../data/tokens.json").miu)
