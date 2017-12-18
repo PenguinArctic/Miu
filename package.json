@@ -9,7 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "discord.js": "github:hydrabolt/discord.js"
+    "discord.js": "github:hydrabolt/discord.js",
+    "simple-git": "^1.85.0"
   },
   "devDependencies": {},
   "description": ""
