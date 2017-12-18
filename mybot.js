@@ -39,7 +39,9 @@ client.on('message', message => {
 				param.splice(0,1);
 			}
 
-			const commandName = param[0]
+			const commandName = param[0].toLowerCase();
+			var command = commands[commandName];
+			
 			if(util.permCheck(message,commandName)){
 				if(command == undefined){command = {}; command.type = param[0].toLowerCase()};
 				if (!client.commands.has(command.type)) return;
