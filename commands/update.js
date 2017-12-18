@@ -1,6 +1,6 @@
 var path = require("path");
 const git = require('simple-git')(path.resolve(__dirname,"../"));
-var util = require('../akira/utilities.js');
+var util = require('../../akira/utilities.js');
 
 module.exports = {
     desc:"This is a description",
