@@ -1,5 +1,11 @@
 const Discord = require("discord.js");
 var client = new Discord.Client();
+client.commands = new Discord.Collection();
+const commandFiles = fs.readdirSync('./commands');
+for (const file of commandFiles) {
+    const command = require(`./commands/${file}`);
+    client.commands.set(file.split(".js")[0], command);
+}
 
 var perms = require("../data/perms.json")
 var nicks = require('../data/nicks.json');
@@ -40,13 +46,10 @@ client.on('message', message => {
 			}
 
 			const commandName = param[0].toLowerCase();
-			var command = commands[commandName];
-			
+
 			if(util.permCheck(message,commandName)){
-				if(command == undefined){command = {}; command.type = param[0].toLowerCase()};
-				if (!client.commands.has(command.type)) return;
-				
-				client.commands.get(command.type).execute(client, message, param);
+				if (!client.commands.has(commandName)) return;				
+				client.commands.get(commandName).execute(client, message, param);
 			}
 		}
 
