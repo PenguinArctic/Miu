@@ -1,4 +1,4 @@
-var util = require("../utilities.js")
+var util = require("../../akira/utilities.js")
 
 module.exports = {
     desc:"This command displays information about a command. Usage: >help command",
