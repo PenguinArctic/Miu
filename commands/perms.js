@@ -1,3 +1,5 @@
+var perms = require("../../data/perms.json")
+
 module.exports = {
     desc:"This is a description",
     execute(client, message, param){
