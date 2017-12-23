@@ -1,4 +1,5 @@
-var perms = require("../../data/perms.json")
+var perms = require("../../data/perms.json");
+var util = require('../../akira/utilities.js');
 
 module.exports = {
     desc:"This is a description",
@@ -38,8 +39,7 @@ module.exports = {
                             }
                         }
                         
-                        result[0].perms = result[0].perms.filter(e => e !== param.join(" ") );
-                        perms.save(result[0]);
+                        util.save(perms,"perms");
                         message.reply("Removed " + param.join(" ") + " from the command " + name);
                         break;
             }
