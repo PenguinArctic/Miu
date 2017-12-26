@@ -60,7 +60,7 @@ client.on('message', message => {
 		}
 
 		switch(message.channel.name){
-			case "change-nickname":
+			case "nickname-change":
 				if(!message.author.bot){
 					var emoji = message.member.nickname.split(" ").pop();
 
