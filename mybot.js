@@ -71,13 +71,17 @@ client.on('message', message => {
 					var emoji = message.member.nickname.split(" ").pop();
 
 					var namechange = message.content + " " + emoji;
-					nicks[message.member.id] = namechange;
+					if(namechange.length < 32){
+						nicks[message.member.id] = namechange;
 
-					message.member.setNickname(namechange,"Name Change sponsored by Monokuma").then(()=>{
-						util.save(nicks,"nicks");
-						message.delete(namechange);
-						message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change"),"Nickname change")
-					})
+						message.member.setNickname(namechange,"Name Change sponsored by Monokuma").then(()=>{
+							util.save(nicks,"nicks");
+							message.delete(namechange);
+							message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change"),"Nickname change")
+						})
+					}else{
+						message.author.send("That nickname is too long");
+					}
 				}
 				break;
 
