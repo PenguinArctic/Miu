@@ -80,6 +80,7 @@ client.on('message', message => {
 							message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change"),"Nickname change")
 						})
 					}else{
+						message.delete();
 						message.author.send("That nickname is too long");
 					}
 				}
