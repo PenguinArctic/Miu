@@ -3,7 +3,12 @@ var util = require('../../akira/utilities.js');
 
 module.exports = {
     desc:"This is a description",
+<<<<<<< HEAD
     async execute(client, message, param){
+=======
+    execute(client, message, param){
+try{
+>>>>>>> 3255f619c0097d48dc3d1b8819428c0dceb4127d
         var name = param[1];
         var type = param[2];
         param = param.slice(3)
@@ -65,4 +70,9 @@ module.exports = {
             }
         }
     }
+catch(e){
+util.log(client,`${e}
+Source: ${__filename.split('/root/bots/')[1]}`)
+}
+}
 }
