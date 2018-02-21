@@ -17,7 +17,7 @@ module.exports = {
             if(time>0){
                 setTimeout(function(memb,msg){
                     if(memb.roles.exists("name","Muted")){
-                        memb.removeRole(msg.guild.roles.find("name","Muted"));
+                        memb.roles.remove(msg.guild.roles.find("name","Muted"));
                     }
                 },time*60000,member,message)
             }

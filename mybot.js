@@ -48,13 +48,13 @@ client.on('debug',info=>{
 client.on('message', message => {
 	try{
 		var prefix = ">";
-		if(message.content.startsWith(prefix) || message.content.startsWith("<@!" + client.user.id + ">")){			
+		if(message.content.startsWith(prefix) || message.content.startsWith(client.user.toString())){			
 			var param = message.content.split(" ");
 
 			if(message.content.startsWith(prefix)){
 				param[0] = param[0].split(prefix)[1];
 			}else{
-				param.splice(0,1);
+				param.splice(1);
 			}
 
 			const commandName = param[0].toLowerCase();
@@ -75,9 +75,10 @@ client.on('message', message => {
 						nicks[message.member.id] = namechange;
 
 						message.member.setNickname(namechange,"Name Change sponsored by Monokuma").then(()=>{
-							util.save(nicks,"nicks");
-							message.delete(namechange);
-							message.member.removeRole(message.guild.roles.find("name","⭕ Nickname Change"),"Nickname change")
+							util.save(nicks,"nicks").then(()=>{
+								message.delete(namechange);
+								message.member.roles.remove(message.guild.roles.find("name","⭕ Nickname Change"),"Nickname change")
+							})							
 						})
 					}else{
 						message.delete();

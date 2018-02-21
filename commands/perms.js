@@ -3,7 +3,7 @@ var util = require('../../akira/utilities.js');
 
 module.exports = {
     desc:"This is a description",
-    execute(client, message, param){
+    async execute(client, message, param){
         var name = param[1];
         var type = param[2];
         param = param.slice(3)
@@ -17,7 +17,7 @@ module.exports = {
                     }else{
                         perms[name].role.push(param.join(" "));
                     }
-                    util.save(perms,"perms");
+                    await util.save(perms,"perms");
                     message.reply(param.join(" ") + " is now allowed to use " + name);
                     break;
 
@@ -39,7 +39,7 @@ module.exports = {
                             }
                         }
                         
-                        util.save(perms,"perms");
+                        await util.save(perms,"perms");
                         message.reply("Removed " + param.join(" ") + " from the command " + name);
                         break;
             }
@@ -56,7 +56,7 @@ module.exports = {
                         perms[name].role.push(param.join(" "));
                     }
 
-                    util.save(perms,"perms");
+                    await util.save(perms,"perms");
                     message.reply(param.join(" ") + " is now allowed to use " + name);
                     break;
 
