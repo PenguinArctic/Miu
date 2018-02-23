@@ -2,7 +2,7 @@ var perms = require("../../data/perms.json");
 var util = require('../../akira/utilities.js');
 
 module.exports = {
-    desc:"This is a description",
+    desc:"Adds or removes permissions to a command. Usage: perms <command> <add│remove> <#channel│@user│roleName>",
     async execute(client, message, param){
         try{
             var name = param[1];
