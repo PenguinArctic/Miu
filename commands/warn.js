@@ -12,7 +12,8 @@ module.exports = {
         if(param.length>2) warn.reason = param.slice(2,param.length).join(' ')
         warns[issued.id].push(warn)
 
-        await message.guild.channels.find('name','general').send(`${message.author} issued warn #${warns[issued.id].length} to ${issued}\nReason: ${warn.reason}`)
+        await message.guild.channels.find('name','staff-log').send(`${message.author} issued warn #${warns[issued.id].length} to ${issued}\nReason: ${warn.reason}`)
+        await message.channel.send(`${message.author} issued warn #${warns[issued.id].length} to ${issued}\nReason: ${warn.reason}`)
         if(warns[issued.id].length >= 3){
             issued.ban({ reason: warn.reason })
         } 
