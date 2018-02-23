@@ -11,7 +11,7 @@ module.exports = {
 
         var warnsMsg = ``;
         for(var i=0;i<warns[issued.id].length;i++){
-            warnsMsg += `${i}) ${warns[issued.id][i].reason}\n`
+            warnsMsg += `${i+1}) ${warns[issued.id][i].reason}\n`
         }
 
         var embed = new MessageEmbed()
