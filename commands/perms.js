@@ -3,76 +3,70 @@ var util = require('../../akira/utilities.js');
 
 module.exports = {
     desc:"This is a description",
-<<<<<<< HEAD
     async execute(client, message, param){
-=======
-    execute(client, message, param){
-try{
->>>>>>> 3255f619c0097d48dc3d1b8819428c0dceb4127d
-        var name = param[1];
-        var type = param[2];
-        param = param.slice(3)
-        if(perms[name] != undefined){
-            switch(type){
-                case "add":
-                    if(message.mentions.users.size > 0){
-                        perms[name].user.push(message.mentions.users.first().id);
-                    }else if(message.mentions.channels.size > 0){
-                        perms[name].channel.push(message.mentions.channels.first().id);
-                    }else{
-                        perms[name].role.push(param.join(" "));
-                    }
-                    await util.save(perms,"perms");
-                    message.reply(param.join(" ") + " is now allowed to use " + name);
-                    break;
-
-                    case "remove":
+        try{
+            var name = param[1];
+            var type = param[2];
+            param = param.slice(3)
+            if(perms[name] != undefined){
+                switch(type){
+                    case "add":
                         if(message.mentions.users.size > 0){
-                            var index = perms[name].user.indexOf(message.mentions.users.first().id);
-                            if(index >= 1){
-                                perms[name].user.splice(index, 1);
-                            }
+                            perms[name].user.push(message.mentions.users.first().id);
                         }else if(message.mentions.channels.size > 0){
-                            var index = perms[name].channel.indexOf(message.mentions.channels.first().id);
-                            if(index >= 1){
-                                perms[name].channel.splice(index, 1);
-                            }
+                            perms[name].channel.push(message.mentions.channels.first().id);
                         }else{
-                            var index = perms[name].role.indexOf(param.join(" "));
-                            if(index >= 1){
-                                perms[name].role.splice(index, 1);
-                            }
+                            perms[name].role.push(param.join(" "));
                         }
-                        
                         await util.save(perms,"perms");
-                        message.reply("Removed " + param.join(" ") + " from the command " + name);
+                        message.reply(param.join(" ") + " is now allowed to use " + name);
                         break;
+
+                        case "remove":
+                            if(message.mentions.users.size > 0){
+                                var index = perms[name].user.indexOf(message.mentions.users.first().id);
+                                if(index >= 1){
+                                    perms[name].user.splice(index, 1);
+                                }
+                            }else if(message.mentions.channels.size > 0){
+                                var index = perms[name].channel.indexOf(message.mentions.channels.first().id);
+                                if(index >= 1){
+                                    perms[name].channel.splice(index, 1);
+                                }
+                            }else{
+                                var index = perms[name].role.indexOf(param.join(" "));
+                                if(index >= 1){
+                                    perms[name].role.splice(index, 1);
+                                }
+                            }
+                            
+                            await util.save(perms,"perms");
+                            message.reply("Removed " + param.join(" ") + " from the command " + name);
+                            break;
+                }
+            }else{
+                switch(type){
+                    case "add":
+                        perms[name] = {"user":[], "role":[], "channel":[]};
+
+                        if(message.mentions.users.size > 0){
+                            perms[name].user.push(message.mentions.users.first().id);
+                        }else if(message.mentions.channels.size > 0){
+                            perms[name].channel.push(message.mentions.channels.first().id);
+                        }else{
+                            perms[name].role.push(param.join(" "));
+                        }
+
+                        await util.save(perms,"perms");
+                        message.reply(param.join(" ") + " is now allowed to use " + name);
+                        break;
+
+                    case "delete":
+                        message.reply("This command has no permissions set");
+                }
             }
-        }else{
-            switch(type){
-                case "add":
-                    perms[name] = {"user":[], "role":[], "channel":[]};
-
-                    if(message.mentions.users.size > 0){
-                        perms[name].user.push(message.mentions.users.first().id);
-                    }else if(message.mentions.channels.size > 0){
-                        perms[name].channel.push(message.mentions.channels.first().id);
-                    }else{
-                        perms[name].role.push(param.join(" "));
-                    }
-
-                    await util.save(perms,"perms");
-                    message.reply(param.join(" ") + " is now allowed to use " + name);
-                    break;
-
-                case "delete":
-                    message.reply("This command has no permissions set");
-            }
+        }catch(e){
+            util.log(client,`${e}\nSource: ${__filename.split('/root/bots/')[1]}`)
         }
     }
-catch(e){
-util.log(client,`${e}
-Source: ${__filename.split('/root/bots/')[1]}`)
-}
-}
 }
