@@ -1,5 +1,6 @@
 var warns = require("../../data/warns.json");
 var util = require('../../akira/utilities.js');
+var {MessageEmbed} = require("discord.js");
 
 module.exports = {
     desc:"This is a description",
@@ -12,7 +13,12 @@ module.exports = {
         if(param.length>2) warn.reason = param.slice(2,param.length).join(' ')
         warns[issued.id].push(warn)
 
-        await message.guild.channels.find('name','staff-log').send(`${message.author} issued warn #${warns[issued.id].length} to ${issued}\nReason: ${warn.reason}`)
+        var embed = new MessageEmbed()
+            .setColor(message.guild.me.displayColor)
+            .setDescription(`${message.author} issued warn #${warns[issued.id].length} to ${issued}\nReason: ${warn.reason}`)
+            .setTimestamp();
+
+        await message.guild.channels.find('name','staff-log').send(embed)
         await message.channel.send(`${message.author} issued warn #${warns[issued.id].length} to ${issued}\nReason: ${warn.reason}`)
         if(warns[issued.id].length >= 3){
             issued.ban({ reason: warn.reason })
