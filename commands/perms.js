@@ -4,7 +4,6 @@ var util = require('../../akira/utilities.js');
 module.exports = {
     desc:"Adds or removes permissions to a command. Usage: perms <command> <add│remove> <#channel│@user│roleName>",
     async execute(client, message, param){
-        try{
             var name = param[1];
             var type = param[2];
             param = param.slice(3)
@@ -65,8 +64,5 @@ module.exports = {
                         message.reply("This command has no permissions set");
                 }
             }
-        }catch(e){
-            util.log(client,`${e}\nSource: ${__filename.split('/root/bots/')[1]}`)
-        }
     }
 }
