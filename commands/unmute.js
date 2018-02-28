@@ -3,7 +3,6 @@ var util = require('../../akira/utilities.js');
 module.exports = {
     desc:"This is a description",
     execute(client, message, param){
-try{
         if(message.mentions.members.size == 0){
             message.channel.send("User to unmute not mentioned");
             return;
@@ -14,10 +13,5 @@ try{
         }else{
             message.channel.send(`${message.mentions.members.first().nickname || message.mentions.users.first().username} is not muted`)
         }
-    }
-catch(e){
-util.log(client,`${e}
-Source: ${__filename.split('/root/bots/')[1]}`)
-}
 }
 }
